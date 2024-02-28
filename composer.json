@@ -1,6 +1,6 @@
 {
-  "name": "future/aggregate",
-  "description": "Aggregate package",
+  "name": "ftr/admin",
+  "description": "admin package",
   "license": "MIT",
   "authors": [
     {
