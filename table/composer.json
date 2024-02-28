@@ -1,0 +1,45 @@
+{
+    "name": "future/table",
+    "description": "Table",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hai Nguyen",
+            "email": "haidev306@gmail.com",
+            "homepage": "haidemo.online"
+        }
+    ],
+    "homepage": "https://github.com/future/table",
+    "keywords": [
+        "Laravel",
+        "table"
+    ],
+    "require": {
+        "php": "^8.1",
+        "livewire/livewire": "^v3.3.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Future\\Table\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Future\\Table\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Future\\Table\\TableServiceProvider"
+            ],
+            "aliases": {
+                "Table": "Future\\Table\\Facades\\Table"
+            }
+        }
+    }
+}
