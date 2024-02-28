@@ -11,16 +11,14 @@
   ],
   "homepage": "https://github.com/trihai306/adminFTR",
   "require": {
-    "php": "^8.1",
+    "php": "^8.1"
   },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Future\\Core\\CoreServiceProvider",
-        "Future\\Form\\FormServiceProvider",
-        "Future\\Table\\TableServiceProvider",
-        "Future\\Messages\\MessagesServiceProvider"
-      ]
+  "autoload": {
+    "psr-4": {
+      "Future\\Core\\": "vendor/future/core/src/",
+      "Future\\Form\\": "vendor/future/form/src/",
+      "Future\\Table\\": "vendor/future/table/src/",
+      "Future\\Messages\\": "vendor/future/messages/src/"
     }
   }
 }
