@@ -2,7 +2,7 @@
 
 namespace Future\Core;
 
-use core\src\Livewire\Admin\MenuHeader;
+use Future\Core\Livewire\Admin\MenuHeader;
 use Future\Core\Livewire\Admin\Notifications\NotificationIcon;
 use Future\Core\Livewire\Admin\Notifications\Notifications;
 use Future\Core\Livewire\Admin\Profile;
