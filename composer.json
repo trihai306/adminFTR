@@ -12,10 +12,6 @@
   "homepage": "https://github.com/trihai306/adminFTR",
   "require": {
     "php": "^8.1",
-    "future/core": "*",
-    "future/form": "*",
-    "future/table": "*",
-    "future/messages": "*"
   },
   "extra": {
     "laravel": {
