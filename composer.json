@@ -1,0 +1,30 @@
+{
+  "name": "future/aggregate",
+  "description": "Aggregate package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hai Nguyen",
+      "email": "haidev306@gmail.com",
+      "homepage": "haidemo.online"
+    }
+  ],
+  "homepage": "https://github.com/trihai306/adminFTR",
+  "require": {
+    "php": "^8.1",
+    "future/core": "*",
+    "future/form": "*",
+    "future/table": "*",
+    "future/messages": "*"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Future\\Core\\CoreServiceProvider",
+        "Future\\Form\\FormServiceProvider",
+        "Future\\Table\\TableServiceProvider",
+        "Future\\Messages\\MessagesServiceProvider"
+      ]
+    }
+  }
+}
