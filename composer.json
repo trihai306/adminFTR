@@ -2,6 +2,7 @@
   "name": "adminftr/future",
   "description": "admin package",
   "license": "MIT",
+  "type": "library",
   "authors": [
     {
       "name": "Hai Nguyen",
@@ -15,10 +16,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Future\\Core\\": "vendor/future/core/src/",
-      "Future\\Form\\": "vendor/future/form/src/",
-      "Future\\Table\\": "vendor/future/table/src/",
-      "Future\\Messages\\": "vendor/future/messages/src/"
+      "Future\\Core\\": "./core/src/",
+      "Future\\Form\\": "./form/src/",
+      "Future\\Table\\": "./table/src/",
+      "Future\\Messages\\": "./messages/src/"
     }
   }
 }

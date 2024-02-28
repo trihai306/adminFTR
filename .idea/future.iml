@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/./core/src" isTestSource="false" packagePrefix="Future\Core\" />
+      <sourceFolder url="file://$MODULE_DIR$/./form/src" isTestSource="false" packagePrefix="Future\Form\" />
+      <sourceFolder url="file://$MODULE_DIR$/./messages/src" isTestSource="false" packagePrefix="Future\Messages\" />
+      <sourceFolder url="file://$MODULE_DIR$/./table/src" isTestSource="false" packagePrefix="Future\Table\" />
+      <sourceFolder url="file://$MODULE_DIR$/core/src" isTestSource="false" packagePrefix="Future\Core\" />
+      <sourceFolder url="file://$MODULE_DIR$/core/tests" isTestSource="true" packagePrefix="Future\Core\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/form/src" isTestSource="false" packagePrefix="Future\Form\" />
+      <sourceFolder url="file://$MODULE_DIR$/form/tests" isTestSource="true" packagePrefix="Future\Form\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/messages/src" isTestSource="false" packagePrefix="Future\Messages\" />
+      <sourceFolder url="file://$MODULE_DIR$/messages/tests" isTestSource="true" packagePrefix="Future\Messages\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/table/src" isTestSource="false" packagePrefix="Future\Table\" />
+      <sourceFolder url="file://$MODULE_DIR$/table/tests" isTestSource="true" packagePrefix="Future\Table\Tests\" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
