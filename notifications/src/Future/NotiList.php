@@ -1,11 +1,11 @@
 <?php
 
-namespace Future\Core\Livewire\Admin\Notifications;
+namespace Future\Notifications\Future;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Notifications extends Component
+class NotiList extends Component
 {
     public $page = 10;
 
@@ -19,7 +19,7 @@ class Notifications extends Component
     public function render()
     {
         $notifications = auth()->user()->notifications()->paginate($this->page);
-        return view('future::livewire.admin.notifications.lists', compact('notifications'));
+        return view('future::future.lists', compact('notifications'));
     }
 
     public function reload()

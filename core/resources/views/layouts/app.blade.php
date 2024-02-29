@@ -13,7 +13,8 @@
     <link href="{{ asset('dist/css/tabler-vendors.min.css') }}?v={{ time() }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/pikaday.css') }}?v={{ time() }}" rel="stylesheet"/>
     <link href="{{ asset('dist/libs/star-rating.js/dist/star-rating.min.css') }}?v={{ time() }}" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css?v={{ time() }}"
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css?v={{ time() }}"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="{{ asset('dist/css/demo.min.css') }}?v={{ time() }}" rel="stylesheet"/>
@@ -43,7 +44,7 @@
             </div>
         </div>
         @include('future::app.footer')
-        @livewire('future::livewire.admin.notifications')
+        <livewire:future::notifications/>
 
     </div>
 </div>
@@ -62,8 +63,8 @@
         integrity="sha512-6JR4bbn8rCKvrkdoTJd/VFyXAN4CE9XMtgykPWgKiHjou56YDJxWsi90hAeMTYxNwUnKSQu9JPc3SQUg+aGCHw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script data-navigate-once src="{{ asset('dist/libs/star-rating.js/dist/star-rating.min.js') }}"></script>
-@include('future::components.scripts.swal')
-@include('future::components.scripts.toast')
+@include('future::swal')
+@include('future::toast')
 @yield('script')
 @livewireScripts
 </body>

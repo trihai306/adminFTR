@@ -39,10 +39,10 @@
                     </svg>
                 </a>
                 @if(config('future.future.messages'))
-                    @livewire('future::admin.messages.icon')
+                    <livewire:future::admin.messages.icon></livewire:future::admin.messages.icon>
                 @endif
                 @if(config('future.future.notifications'))
-                    @livewire('future::livewire.admin.notifications.icon')
+                    <livewire:future::notifications.icon></livewire:future::notifications.icon>
                 @endif
 
             </div>

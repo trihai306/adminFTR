@@ -78,6 +78,6 @@
                 </div>
             </div>
         </div>
-        @livewire('future::livewire.admin.menu-header')
+        <livewire:future::livewire.admin.menu-header></livewire:future::livewire.admin.menu-header>
     </div>
 </aside>

@@ -19,7 +19,8 @@
         "Future\\Core\\": "./core/src/",
         "Future\\Form\\": "./form/src/",
         "Future\\Table\\": "./table/src/",
-        "Future\\Messages\\": "./messages/src/"
+        "Future\\Messages\\": "./messages/src/",
+        "Future\\Notifications\\": "./notifications/src/"
     }
   }
 }

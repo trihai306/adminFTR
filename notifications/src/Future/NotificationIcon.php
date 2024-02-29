@@ -1,7 +1,6 @@
 <?php
 
-namespace Future\Core\Livewire\Admin\Notifications;
-
+namespace Future\Notifications\Future;
 use Livewire\Component;
 
 class NotificationIcon extends Component
@@ -26,7 +25,7 @@ class NotificationIcon extends Component
 
     public function render()
     {
-        return view('future::livewire.admin.notifications.icon', ['count' => $this->getCount()]);
+        return view('future::future.icon', ['count' => $this->getCount()]);
     }
 
     public function getCount()
