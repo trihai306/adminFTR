@@ -8,6 +8,7 @@ return [
     'add_data' => 'Add data',
     'filter' => 'Filter',
     'delete_all' => 'Delete all',
+    'bulk-action'=>'Bulk action',
     'actions' => 'Actions',
     'showing_from_to' => 'Showing from :first to :last of :total records',
     'loading' => 'Loading...',

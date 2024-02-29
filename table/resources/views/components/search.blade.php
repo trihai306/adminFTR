@@ -1,5 +1,5 @@
 <label>
-    <input type="text" class="form-control form-control-rounded form-control-solid  ps-13"
+    <input type="text" class="form-control form-control-solid"
            wire:model.live.debounce.300ms="search"
            placeholder="{{ __('future::messages.search') }}"/>
     <span class="input-icon-addon">

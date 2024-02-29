@@ -6,13 +6,16 @@
     </div>
     <div class="card-toolbar">
         <div class="d-flex flex-column flex-md-row justify-content-end ">
-            <div x-show="selectedRows.length > 0" class="btn-group" style="display: none">
-                <button x-on:click="
+            <div x-show="selectedRows.length > 0" class="dropdown" style="display: none">
+                <button class='btn align-text-top dropdown-toggle' type='button' data-bs-auto-close="outside" data-bs-toggle='dropdown'>{{__('future::messages.bulk-action')}}</button>
+                <div class='dropdown-menu'>
+                    <a x-on:click="
                 $wire.SelectedRows(selectedRows,'deletes','bạn có chắc chắn muốn xóa?');
-                " class="btn btn-danger">
-                    <i class="fa fa-trash"></i>
-                    <span class="ms-2">{{ __('future::messages.delete_all') }}</span>
-                </button>
+                " class="dropdown-item">
+                        <i class="fa fa-trash"></i>
+                        <span class="ms-2">{{ __('future::messages.delete_all') }}</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -1,13 +1,15 @@
-<tbody id="table-body" class="text-gray-600">
 @if($data)
+<tbody id="table-body" class="text-gray-600">
     @foreach($data as $item)
         <tr wire:key="data-{{$item->id}}">
             @if($this->canSelect())
                 <td>
                     <div >
-                        <label>
-                            <input type="checkbox" class="form-check-input" :value="item.id"
-                                   x-bind:checked="selectAll || selectedRows.includes(item.id)"
+                        <label for="check-{{$item->id}}">
+                            <input type="checkbox" class="form-check-input checkbox" id="check-{{$item->id}}"
+                                   :value="{{$item->id}}"
+                                   value="{{$item->id}}"
+                                   x-bind:checked="selectAll || selectedRows.includes({{$item->id}})"
                                    x-on:click="
                                   if(selectedRows.includes(item.id)) {
                                     selectAll = false;
@@ -38,5 +40,5 @@
             @endif
         </tr>
     @endforeach
-@endif
 </tbody>
+@endif

@@ -6,10 +6,22 @@
                     <h5 class="modal-title" id="{{$name}}Label">{{$title}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body d-none" wire:loading.class.remove="d-block">
                     @foreach($inputs as $input)
                         {!! $input->render() !!}
                     @endforeach
+                </div>
+                <div class="modal-body" wire:loading>
+                    @foreach($inputs as $input)
+                        <div class="mb-3">
+                            <div class="placeholder-glow">
+                                <span class="placeholder col-12"></span>
+                                <span class="placeholder col-12"></span>
+                            </div>
+                        </div>
+                    @endforeach
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('future::forms.close')}}</button>
