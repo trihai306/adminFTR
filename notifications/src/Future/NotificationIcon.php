@@ -19,7 +19,7 @@ class NotificationIcon extends Component
     {
         return [
             'ReadNotification' => 'loadCount',
-            "echo-private:App.Models.User.{$this->userId},UserNotification" => "loadCount",
+            'reloadNotification' => 'loadCount'
         ];
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Future\Core\Livewire\Admin;
+namespace Future\Core\Future\Admin;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;

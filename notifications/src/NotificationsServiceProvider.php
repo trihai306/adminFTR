@@ -19,7 +19,7 @@ class NotificationsServiceProvider extends ServiceProvider
     {
         Livewire::component('future::notifications.icon', NotificationIcon::class);
         Livewire::component('future::notifications', NotiList::class);
-         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'future');
+         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'resource');
          $this->loadViewsFrom(__DIR__.'/../resources/views', 'future');
          $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Sign in</title>
-    <!-- CSS files -->
     <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet"/>
@@ -29,14 +28,10 @@
 <div class="page page-center">
     @yield('content')
 </div>
-<!-- Libs JS -->
-<!-- Tabler Core -->
-
 @vite('resources/js/app.js')
-
 <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
 <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
-@include('future::notifications.resources.views.swal')
+@include('future::swal')
 @yield('script')
 @livewireScripts
 </body>

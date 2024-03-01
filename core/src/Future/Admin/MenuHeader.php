@@ -1,6 +1,6 @@
 <?php
 
-namespace Future\Core\Livewire\Admin;
+namespace Future\Core\Future\Admin;
 
 use Future\Core\Http\Models\Menu;
 use Livewire\Component;

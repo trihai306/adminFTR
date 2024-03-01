@@ -69,7 +69,6 @@
         },
         updateData(){
             var checkboxes = document.querySelectorAll('.checkbox');
-            Array.from(checkboxes).map(checkbox => console.log(checkbox.value));
             this.data = Array.from(checkboxes).map(checkbox => checkbox.value);
         },
         watchSelectedRows() {

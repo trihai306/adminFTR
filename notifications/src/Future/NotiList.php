@@ -3,7 +3,6 @@
 namespace Future\Notifications\Future;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class NotiList extends Component
 {
@@ -12,7 +11,8 @@ class NotiList extends Component
     public function getListeners()
     {
         return [
-           'showNotifications' => 'reload',
+           'showNotifications' => 'render',
+            'reloadNotification' => 'render'
         ];
     }
 
@@ -20,11 +20,6 @@ class NotiList extends Component
     {
         $notifications = auth()->user()->notifications()->paginate($this->page);
         return view('future::future.lists', compact('notifications'));
-    }
-
-    public function reload()
-    {
-        $this->page = 10;
     }
 
     public function loadMore()
@@ -51,10 +46,10 @@ class NotiList extends Component
         try {
             auth()->user()->unreadNotifications->markAsRead();
             $this->dispatch('ReadNotification');
-            $this->dispatch('showToast', ['type' => 'success', 'message' => 'Đã đọc tất cả thông báo']);
+            $this->dispatch('notification', ['type' => 'success', 'message' => 'Đã đọc tất cả thông báo']);
         }
         catch (\Exception $exception) {
-            $this->dispatch('showToast', ['type' => 'error', 'message' => 'Có lỗi xảy ra']);
+            $this->dispatch('notification', ['type' => 'error', 'message' => 'Có lỗi xảy ra']);
         }
     }
 }

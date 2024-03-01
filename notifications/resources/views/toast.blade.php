@@ -55,6 +55,7 @@
                     .notification((notification) => {
                         if (notification.type === 'App\\Notifications\\UserNotification') {
                             notification.time = new Date().toLocaleTimeString();
+                            window.Livewire.dispatch('reloadNotification')
                             this.show(notification.title, notification.time, notification.content);
                         }
                     });

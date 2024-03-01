@@ -12,19 +12,14 @@
                     @foreach($notifications as $notification)
                         <div class="list-group-item" wire:click="markAsRead('{{$notification->id}}')"
                              style="cursor: pointer;">
-                            <div class="pe-3 mb-5">
+                            <div class="pe-3">
                                 <div
                                     class="mb-2">
-                                   <h4> {{$notification->data['title']}}</h4>
-                                    <p>
-                                        {{
-                                       Carbon::parse($notification->created_at)->diffForHumans()
-                                   }}
-                                    </p>
+                                   <h4 class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }}"> {{$notification->data['title']}}</h4>
+                                    <p class="fs-5">{{Carbon::parse($notification->created_at)->diffForHumans()}}</p>
                                 </div>
-                                <div class="d-flex align-items-center mt-1 fs-6">
-                                    <div
-                                        class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }} me-2 fs-7">{{$notification->data['content']}}</div>
+                                <div class="d-flex align-items-center mt-1">
+                                    <div class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }} me-2">{{$notification->data['content']}}</div>
                                 </div>
                             </div>
                         </div>

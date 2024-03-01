@@ -4,7 +4,7 @@
     <div class="card">
         <div class="row g-0">
             @include('future::auth.profile.sidebar')
-            @livewire('future::livewire.admin.profile')
+            @livewire('future::admin.profile')
         </div>
     </div>
 
