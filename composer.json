@@ -3,6 +3,7 @@
     "description": "admin package",
     "license": "MIT",
     "type": "library",
+
     "authors": [
         {
             "name": "Hai Nguyen",
