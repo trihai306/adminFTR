@@ -2,13 +2,12 @@
 
 namespace Future\Table\Future;
 
+use Future\Future\BaseWidget;
 use Future\Table\Future\Tables\Actions\Actions;
 use Future\Table\Future\Tables\Traits\Can;
 use Future\Table\Future\Tables\Traits\ColumnVisibilityTrait;
-use Future\Table\Future\Tables\Traits\Exportable;
 use Future\Table\Future\Tables\Traits\FilterColumnsTrait;
 use Future\Table\Future\Tables\Traits\Functions;
-use Future\Table\Future\Tables\Traits\Importable;
 use Future\Table\Future\Tables\Traits\PaginationTrait;
 use Future\Table\Future\Tables\Traits\SearchTrait;
 use Future\Table\Future\Tables\Traits\SelectTrait;
@@ -31,8 +30,7 @@ abstract class BaseTable extends Component
     protected array $select = [];
     protected string $model;
     public string $urlCreate = '';
-    public $forms = [];
-
+    public array $forms = [];
     public function placeholder()
     {
         return view('future::livewire.placeholder');
@@ -62,7 +60,6 @@ abstract class BaseTable extends Component
     }
 
     abstract protected function filters() : array;
-
 
     protected function defineFilters() : array
     {

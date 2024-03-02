@@ -1,26 +1,27 @@
 {
-  "name": "adminftr/future",
-  "description": "admin package",
-  "license": "MIT",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Hai Nguyen",
-      "email": "haidev306@gmail.com"
+    "name": "adminftr/future",
+    "description": "admin package",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Hai Nguyen",
+            "email": "haidev306@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/trihai306/adminFTR",
+    "require": {
+        "php": "^8.1",
+        "livewire/livewire": ">=3.3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Future\\Core\\": "./core/src/",
+            "Future\\Form\\": "./form/src/",
+            "Future\\Table\\": "./table/src/",
+            "Future\\Messages\\": "./messages/src/",
+            "Future\\Notifications\\": "./notifications/src/",
+            "Future\\Widgets\\": "./widgets/src/"
+        }
     }
-  ],
-  "homepage": "https://github.com/trihai306/adminFTR",
-  "require": {
-    "php": "^8.1",
-    "livewire/livewire": ">=3.3.5"
-  },
-  "autoload": {
-    "psr-4": {
-        "Future\\Core\\": "./core/src/",
-        "Future\\Form\\": "./form/src/",
-        "Future\\Table\\": "./table/src/",
-        "Future\\Messages\\": "./messages/src/",
-        "Future\\Notifications\\": "./notifications/src/"
-    }
-  }
 }

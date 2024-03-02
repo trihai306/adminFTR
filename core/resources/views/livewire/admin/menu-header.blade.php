@@ -8,9 +8,7 @@
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <i class="{{$menu->icon}}"></i>
                                     </span>
-                            <span class="nav-link-title">
-                                        {{ $menu->title}}
-                                    </span>
+                            <span class="nav-link-title">{{ $menu->title}}</span>
                         </a>
                     </li>
                 @else

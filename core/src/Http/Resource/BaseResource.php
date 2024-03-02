@@ -21,7 +21,10 @@ abstract class BaseResource extends Controller
         $this->table = $table;
         $this->form = $form;
     }
-
+    protected function getClassName()
+    {
+        return get_class($this);
+    }
     public function getRouteName()
     {
         return $this->routeName;
