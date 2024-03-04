@@ -59,6 +59,11 @@ abstract class BaseTable extends Component
         return [];
     }
 
+    protected function bulkActions() : array
+    {
+        return [];
+    }
+
     abstract protected function filters() : array;
 
     protected function defineFilters() : array
@@ -140,6 +145,7 @@ abstract class BaseTable extends Component
             'headerActions' => $this->headerActions(),
             'Input_filters' => $this->defineFilters(),
             'data' => $data,
+            'bulkActions' => $this->bulkActions(),
         ]);
     }
 }

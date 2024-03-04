@@ -11,17 +11,17 @@
                                    value="{{$item->id}}"
                                    x-bind:checked="selectAll || selectedRows.includes({{$item->id}})"
                                    x-on:click="
-                                  if(selectedRows.includes(item.id)) {
+                                if(selectedRows.includes({{$item->id}})) {
                                     selectAll = false;
-                                    selectedRows = selectedRows.filter((id) => id !== item.id);
+                                    selectedRows = selectedRows.filter(row => row !== {{$item->id}});
                                 } else {
-                                    selectedRows.push(item.id);
+                                    selectedRows.push({{$item->id}});
                                 }
                                 if(data.length == selectedRows.length) {
                                     selectAll = true;
                                     return;
                                 }
-                                ">
+                            ">
                         </label>
                     </div>
                 </td>
