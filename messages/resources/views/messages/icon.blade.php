@@ -8,15 +8,15 @@
         </svg>
         <span class="badge bg-primary text-white badge-notification badge-pill">{{$count}}</span>
     </a>
-    <div wire:ignore.self class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+    <div wire:ignore class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
         <div class="card" style="width: 400px">
             <div class="card-header">
-                <h3 class="card-title">Danh sách tin nhắn <span
+                <h3 class="card-title">@lang('future::messages.message_list') <span
                         class="badge text-white bg-primary ms-2">{{$count}}</span>
                 </h3>
             </div>
             <div class="list-group scrollable list-group-flush list-group-hoverable" style="max-height: 35rem">
-                @if($conversations)
+                @if($conversations->total() > 0)
                     @foreach($conversations as $conversation)
                         <div class="list-group-item">
                             <div class="row align-items-center">
@@ -74,7 +74,7 @@
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col text-center">
-                                <p>Không có tin nhắn mới</p>
+                                <p>@lang('future::messages.no_new_messages')</p>
                             </div>
                         </div>
                     </div>

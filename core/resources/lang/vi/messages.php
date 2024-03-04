@@ -19,4 +19,7 @@ return [
     'discard' => 'Hủy bỏ',
     'submit' => 'Gửi đi',
     'please_wait' => 'Vui lòng đợi...',
+    'message_list' => 'Danh sách tin nhắn',
+    'no_new_messages' => 'Không có tin nhắn mới',
+    'view_all' => 'Xem tất cả',
 ];

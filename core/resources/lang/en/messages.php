@@ -20,4 +20,7 @@ return [
     'discard' => 'Discard',
     'submit' => 'Submit',
     'please_wait' => 'Please wait...',
+    'message_list' => 'Message List',
+    'no_new_messages' => 'No new messages',
+    'view_all' => 'View All',
 ];
