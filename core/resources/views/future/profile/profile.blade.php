@@ -16,15 +16,18 @@
             <div class="row g-3">
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.name') }}</div>
-                    <input type="text" class="form-control" value="{{ Auth::user()->name ?? 'chưa có tên' }}" readonly>
+                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->name ?? 'chưa có tên' }}" readonly>
+                    <p x-show="!isEdit">{{ Auth::user()->name ?? 'chưa có tên' }}</p>
                 </div>
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.phone') }}</div>
-                    <input type="text" class="form-control" value="{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}" readonly>
+                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}" readonly>
+                    <p x-show="!isEdit">{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}</p>
                 </div>
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.birthday') }}</div>
-                    <input type="text" class="form-control" value="{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}" readonly>
+                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}" readonly>
+                    <p x-show="!isEdit">{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}</p>
                 </div>
             </div>
 
@@ -56,7 +59,7 @@
                 <button type="submit" class="btn btn-primary" x-show="isEdit == true">
                     {{ __('future::profile.submit') }}
                 </button>
-                <button type="button" class="btn btn-primary" x-show="isEdit == true" x-on:click="isEdit = !isEdit">
+                <button type="button" class="btn btn-secondary" x-show="isEdit == true" x-on:click="isEdit = !isEdit">
                     {{ __('future::profile.close') }}
                 </button>
                 <button type="button" class="btn btn-primary" x-show="isEdit == false" x-on:click="isEdit = !isEdit">
