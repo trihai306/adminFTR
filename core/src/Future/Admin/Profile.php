@@ -19,11 +19,14 @@ class Profile extends Component
 
     public function updatedAvatar()
     {
-        $this->validate(['avatar' => 'image|max:1024', // 1MB Max
+        $this->validate(['avatar' => 'image|max:2048', // 1MB Max
         ]);
         if ($this->avatar) {
             $fileName = $this->avatar->store('avatars', 'public');
             auth()->user()->update(['avatar' => $fileName]);
+            $this->dispatch('swalSuccess',[
+                'message' => 'Avatar updated successfully!'
+            ]);
         }
     }
 
@@ -44,6 +47,6 @@ class Profile extends Component
 
     public function render()
     {
-        return view('future::livewire.admin.profile.profile');
+        return view('future::future.profile.profile');
     }
 }

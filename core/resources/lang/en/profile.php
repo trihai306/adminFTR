@@ -17,4 +17,6 @@ return [
     'settings' => 'Settings',
     'my_notifications' => 'My Notifications',
     'plans' => 'Plans',
+    'close' => 'Close',
+    'edit' => 'Edit',
 ];

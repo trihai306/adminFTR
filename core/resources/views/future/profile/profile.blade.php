@@ -1,4 +1,4 @@
-<div class="col-12 col-md-9 d-flex flex-column">
+<div class="col-12 col-md-9 d-flex flex-column" x-data="{ isEdit: false }">
     <form>
         <div class="card-body">
             <h2 class="mb-4">{{ __('future::profile.my_account') }}</h2>
@@ -16,15 +16,15 @@
             <div class="row g-3">
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.name') }}</div>
-                    <p class="form-control">{{ Auth::user()->name ?? 'chưa có tên' }}</p>
+                    <input type="text" class="form-control" value="{{ Auth::user()->name ?? 'chưa có tên' }}" readonly>
                 </div>
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.phone') }}</div>
-                    <p class="form-control">{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}</p>
+                    <input type="text" class="form-control" value="{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}" readonly>
                 </div>
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.birthday') }}</div>
-                    <p class="form-control">{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}</p>
+                    <input type="text" class="form-control" value="{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}" readonly>
                 </div>
             </div>
 
@@ -53,8 +53,14 @@
         </div>
         <div class="card-footer bg-transparent mt-auto">
             <div class="btn-list justify-content-start">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" x-show="isEdit == true">
                     {{ __('future::profile.submit') }}
+                </button>
+                <button type="button" class="btn btn-primary" x-show="isEdit == true" x-on:click="isEdit = !isEdit">
+                    {{ __('future::profile.close') }}
+                </button>
+                <button type="button" class="btn btn-primary" x-show="isEdit == false" x-on:click="isEdit = !isEdit">
+                    {{ __('future::profile.edit') }}
                 </button>
             </div>
         </div>
