@@ -7,15 +7,14 @@
                     <div >
                         <label for="check-{{$item->id}}">
                             <input type="checkbox" class="form-check-input checkbox" id="check-{{$item->id}}"
-                                   :value="{{$item->id}}"
                                    value="{{$item->id}}"
-                                   x-bind:checked="selectAll || selectedRows.includes({{$item->id}})"
+                                   x-bind:checked="selectAll || selectedRows.includes('{{$item->id}}')"
                                    x-on:click="
-                                if(selectedRows.includes({{$item->id}})) {
+                                if(selectedRows.includes('{{$item->id}}')) {
                                     selectAll = false;
-                                    selectedRows = selectedRows.filter(row => row !== {{$item->id}});
+                                    selectedRows = selectedRows.filter(row => row !== '{{$item->id}}');
                                 } else {
-                                    selectedRows.push({{$item->id}});
+                                    selectedRows.push('{{$item->id}}');
                                 }
                                 if(data.length == selectedRows.length) {
                                     selectAll = true;

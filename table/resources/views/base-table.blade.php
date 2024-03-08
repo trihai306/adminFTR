@@ -58,6 +58,7 @@
         selectAll: false,
         selectedRows: [],
         data: [],
+        length: 0,
         updateSelectAll() {
             this.updateData()
             this.selectAll = !this.selectAll;
@@ -66,6 +67,7 @@
             } else {
                 this.selectedRows = [];
             }
+
         },
         updateData(){
             var checkboxes = document.querySelectorAll('.checkbox');
@@ -74,6 +76,7 @@
         watchSelectedRows() {
             this.$watch('selectedRows', () => {
                 this.selectAll = this.data.length === this.selectedRows.length;
+                this.length = this.selectedRows.length;
             });
         },
 

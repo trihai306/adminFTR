@@ -1,5 +1,5 @@
 <?php
-namespace Future\Tables\BulkActions;
+namespace Future\Table\Future\Tables\BulkActions;
 
 class BulkAction
 {
