@@ -5,11 +5,10 @@
             @if($this->canSelect())
                 <td>
                     <div >
-                        <label for="check-{{$item->id}}">
-                            <input type="checkbox" class="form-check-input checkbox" id="check-{{$item->id}}"
-                                   value="{{$item->id}}"
-                                   x-bind:checked="selectAll || selectedRows.includes('{{$item->id}}')"
-                                   x-on:click="
+                        <input type="checkbox" class="form-check-input checkbox" id="check-{{$item->id}}"
+                               value="{{$item->id}}"
+                               x-bind:checked="selectAll || selectedRows.includes('{{$item->id}}')"
+                               x-on:click="
                                 if(selectedRows.includes('{{$item->id}}')) {
                                     selectAll = false;
                                     selectedRows = selectedRows.filter(row => row !== '{{$item->id}}');
@@ -21,7 +20,6 @@
                                     return;
                                 }
                             ">
-                        </label>
                     </div>
                 </td>
             @endif

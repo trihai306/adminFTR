@@ -10,7 +10,7 @@ class Login extends Component
     public $password;
     public function render()
     {
-        return view('future::livewire.auth.login');
+        return view('future::future.auth.login');
     }
 
     public function login()

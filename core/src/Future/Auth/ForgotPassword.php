@@ -24,6 +24,6 @@ class ForgotPassword extends Component
 
     public function render()
     {
-        return view('future::livewire.auth.forgot-password');
+        return view('future::future.auth.forgot-password');
     }
 }

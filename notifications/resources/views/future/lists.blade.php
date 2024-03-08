@@ -1,5 +1,5 @@
 @php use Carbon\Carbon; @endphp
-<div id="notification" class="bg-body offcanvas offcanvas-end" wire:ignore.self tabindex="-1"
+<div id="notification" class="bg-body offcanvas offcanvas-end" wire:ignore tabindex="-1"
      aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
         <h3 class="mt-2">Thông báo</h3>
@@ -11,15 +11,17 @@
                 @if($notifications)
                     @foreach($notifications as $notification)
                         <div class="list-group-item" wire:click="markAsRead('{{$notification->id}}')"
-                             style="cursor: pointer;">
+                             wire:key="{{$notification->id}}" style="cursor: pointer;">
                             <div class="pe-3">
                                 <div
                                     class="mb-2">
-                                   <h4 class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }}"> {{$notification->data['title']}}</h4>
+                                   <h4 class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }}">
+                                       {{$notification->data['title']}}</h4>
                                     <p class="fs-5">{{Carbon::parse($notification->created_at)->diffForHumans()}}</p>
                                 </div>
                                 <div class="d-flex align-items-center mt-1">
-                                    <div class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }} me-2">{{$notification->data['content']}}</div>
+                                    <div class="{{ is_null($notification->read_at) ? '' : 'text-secondary' }} me-2">
+                                        {{$notification->data['content']}}</div>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +52,8 @@
         </div>
     </div>
     <div class="offcanvas-footer text-center">
-        <button wire:click="readAll" wire:loading.remove class="btn btn-bg-body text-primary"> Đánh dấu tất cả đã đọc</button>
+        <button wire:click="readAll" wire:loading.remove
+                class="btn btn-bg-body text-primary"> Đánh dấu tất cả đã đọc</button>
         <button wire:loading wire:target="readAll" class="btn btn-bg-body text-primary" disabled>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Đang xử lý...

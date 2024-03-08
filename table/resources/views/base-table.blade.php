@@ -9,13 +9,14 @@
                     @foreach($headerActions as $headerAction)
                         {{ $headerAction->render()}}
                     @endforeach
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                    <button type="button" class="btn btn-primary dropdown-toggle"
+                            data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="ki-duotone ki-abstract-30 fs-2">
                             <span class="path1"></span>
                             <span class="path2"></span>
                         </i>
                     </button>
-                    <div class="dropdown-menu" wire:ignore >
+                    <div class="dropdown-menu" wire:ignore>
                         @foreach($this->defineColumns() as $column)
                             <div class="form-check mb-2">
                                 <input class="form-check-input" type="checkbox"
