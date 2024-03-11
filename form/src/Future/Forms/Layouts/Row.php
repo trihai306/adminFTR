@@ -28,11 +28,13 @@ class Row{
 
     public function addCol($col)
     {
-        if (!($col instanceof Col)) {
-            $col = Col::make()->schema([$col]);
+        if (!$col->canHide){
+            if (!($col instanceof Col)) {
+                $col = Col::make()->schema([$col]);
+            }
+            $col->addClasses($this->defaultColClasses);
+            $this->cols[] = $col;
         }
-        $col->addClasses($this->defaultColClasses);
-        $this->cols[] = $col;
         return $this;
     }
 

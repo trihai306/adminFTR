@@ -12,7 +12,7 @@ class TextInput extends Field
     protected $pattern = null;
     protected $autocomplete = 'on';
     protected bool $readOnly = false;
-    protected bool $disabled = false;
+    public bool $disabled = false;
     protected $size = null;
     protected $step = null;
 
@@ -90,6 +90,8 @@ class TextInput extends Field
         $canHide = $this->canHide;
 
         return view('future::base.form.textInput',
-            compact('canHide','type', 'name','required', 'classes', 'attributes', 'defaultValue', 'placeholder', 'maxLength', 'pattern', 'autocomplete', 'readOnly', 'disabled', 'size', 'step', 'label'));
+            compact('canHide','type', 'name','required', 'classes', 'attributes',
+                'defaultValue', 'placeholder', 'maxLength', 'pattern', 'autocomplete',
+                'readOnly', 'disabled', 'size', 'step', 'label'));
     }
 }

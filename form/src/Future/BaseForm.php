@@ -11,6 +11,7 @@ use Livewire\Component;
 abstract class BaseForm extends Component
 {
     protected $form;
+    #[Locked]
     public $id;
     protected $model;
     public array $data = [];
@@ -22,16 +23,23 @@ abstract class BaseForm extends Component
             $this->model = $this->model::find($this->id);
             $this->data = $this->model->toArray();
         }
+
+    }
+
+    public function boot()
+    {
+        $this->form = $this->form(new Form());
     }
 
     public function render()
     {
-        $this->form = $this->form(new Form());
+
         return view('future::base-form', ['inputs' => $this->form->render()]);
     }
 
     public function save()
     {
+        dd(url()->current());
         if (method_exists($this, 'rules')) {
             $this->validate();
         }

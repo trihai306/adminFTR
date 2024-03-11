@@ -3,7 +3,7 @@
     @foreach ($this->attributes as $name => $value)
         {{ $name }}="{{ $value }}"
     @endforeach
-    @endif
+@endif
 >
     @if($title)
         <div class="card-header {{ $headerClasses }} h4 mt-3">{{ $title }}</div>

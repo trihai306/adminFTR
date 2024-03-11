@@ -16,9 +16,10 @@ class Column
     public $renderCallback;
     public ?string $width = null;
     public ?string $textAlign;
+    public ?string $height = null;
 
-
-    public function __construct(string $name, string $label = null, bool $sortable = false,  bool $searchable = false, bool $visible = true, callable $renderCallback = null)
+    public function __construct(string $name, string $label = null, bool $sortable = false,  bool $searchable = false,
+                                bool $visible = true, callable $renderCallback = null)
     {
         $this->name = $name;
         $this->label = $label ?? $name;
@@ -59,7 +60,7 @@ class Column
 
     public function dateTime($format = 'Y-m-d H:i:s')
     {
-        $this->renderCallback = function($model,$value) use ($format) {
+        $this->renderCallback = function($model, $value) use ($format) {
             return (new \DateTime($value))->format($format);
         };
         return $this;
@@ -92,7 +93,11 @@ class Column
         return $this;
     }
 
-
+    public function height($height='100px')
+    {
+        $this->height = $height;
+        return $this;
+    }
 
     public function width($width='100px')
     {

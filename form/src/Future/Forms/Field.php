@@ -12,7 +12,7 @@ class Field
     protected mixed $defaultValue = null;
     protected string $label = '';
     protected string $helpText = '';
-    protected bool $canHide = false;
+    public bool $canHide = false;
     protected array $col = [];
     protected string $placeholder = '';
 
@@ -86,20 +86,20 @@ class Field
         return $this;
     }
 
-    public function canStore($hide = false): self
+    public function canStore($hide)
     {
         $currentRouteName = request()->route()->getName();
         if (str_contains($currentRouteName, 'edit')) {
-            $this->canHide = $hide;
+            $this->canHide = !$hide;
         }
         return $this;
     }
 
-    public function canCreate($hide = false): self
+    public function canCreate($hide)
     {
         $currentRouteName = request()->route()->getName();
         if (str_contains($currentRouteName, 'edit')) {
-            $this->canHide = $hide;
+            $this->canHide = !$hide;
         }
         return $this;
     }

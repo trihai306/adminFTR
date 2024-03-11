@@ -13,7 +13,11 @@
             <th id="{{ $column->name }}Header" scope="col" style="
        @if($column->width)
             width: {{ $column->width }};
-            @endif
+        @endif
+
+        @if($column->height)
+            height: {{ $column->height }};
+        @endif
          text-align: {{ $column->textAlign ?? 'left' }};"
                 wire:click="sortBy('{{ $column->name }}')" style="cursor: pointer;">
                 {{ $column->label }}

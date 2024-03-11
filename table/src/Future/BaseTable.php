@@ -105,7 +105,6 @@ abstract class BaseTable extends Component
     protected function applyTableQuery()    : \Illuminate\Database\Eloquent\Builder
     {
         $query = $this->query();
-        // Implement search logic
         if (!empty(array_filter($this->filters))) {
             $query = $this->applyFilters();
         }

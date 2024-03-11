@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageColumn extends Column
 {
-    protected int $height=60;
+    public ?string $height= '60px';
     protected string $disk = 'public';
     protected bool $circular = false;
     protected  $stacked;
@@ -17,12 +17,6 @@ class ImageColumn extends Column
     public static function make(string $name, string $label = null)
     {
         return new static($name, $label);
-    }
-
-    public function height(int $height)
-    {
-        $this->height = $height;
-        return $this;
     }
 
     public function stacked(callable $callback)
@@ -66,6 +60,7 @@ class ImageColumn extends Column
 
         $circularClass = $this->circular ? 'rounded-circle' : 'rounded';
 
-        return new HtmlString("<img src='{$url}' class='img-fluid {$circularClass}' style='height: {$this->height}px;width: {$this->width}px' />" );
+        return new HtmlString("<img src='{$url}' class='img-fluid {$circularClass}'
+style='height: {$this->height}px;width: {$this->width}px'  alt=''/>" );
     }
 }

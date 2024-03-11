@@ -120,13 +120,15 @@ class TextColumn extends Column
 
         if ($this->copy) {
             $iconCopy = new HtmlString("
-                <button class='btn btn-sm btn-icon btn-soft-primary btn-copy' data-clipboard-text='{$value}' data-bs-toggle='tooltip' data-bs-placement='top' title='Copy'>
+                <button class='btn btn-sm btn-icon btn-soft-primary btn-copy' data-clipboard-text='{$value}'
+                data-bs-toggle='tooltip' data-bs-placement='top' title='Copy'>
                     <i class='far fa-copy'></i>
                 </button>
             ");
         }
 
-        $renderedValue = new HtmlString($this->renderCallback ? call_user_func($this->renderCallback, $model, $value) : $value);
+        $renderedValue = new HtmlString($this->renderCallback ?
+            call_user_func($this->renderCallback, $model, $value) : $value);
         return view('future::base.table.column', [
             'value' => $renderedValue,
             'iconHtml' => $iconHtml,

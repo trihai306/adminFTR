@@ -1,13 +1,15 @@
 @php
     $required = $isRequired ? 'required' : '';
-    $classes = !empty($classes) ? 'form-control form-control-rounded form-select'.$classes : 'form-control form-control-rounded form-select';
+    $classes = !empty($classes) ? 'form-control form-control-rounded form-select'.$classes :
+    'form-control form-control-rounded form-select';
 @endphp
 @if(!$canHide)
     @if($label)
-        <label class="form-label">{{$label}}</label>
+        <label class="form-label" for="{{$name}}">{{$label}}</label>
     @endif
 
-    <select name="{{ $name }}" id="{{$name}}"  wire:model="data.{{ $name }}" {{ $required }} class="{{ $classes }}" {{ $attributes }}>
+    <select name="{{ $name }}" id="{{$name}}"  wire:model="data.{{ $name }}"
+            {{ $required }} class="{{ $classes }}" {{ $attributes }}>
         @foreach($options as $value => $labelOption)
             <option value="{{ $value }}" {{ $value == $defaultValue ? 'selected' : '' }}>{{ $labelOption }}</option>
         @endforeach
