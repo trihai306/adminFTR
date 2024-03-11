@@ -5,20 +5,25 @@ namespace Future\Form\Future;
 
 use Exception;
 use Future\Form\Future\Forms\Form;
+use Future\Form\Future\Forms\UrlHelper;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 abstract class BaseForm extends Component
 {
-    protected $form;
     #[Locked]
     public $id;
-    protected $model;
     public array $data = [];
+    protected $form;
+    protected $model;
+    #[Locked]
+    public $url;
 
-    public function mount(string $id = null)
+    public function mount(string $id = null, string $url = null)
     {
         $this->id = $id;
+        $this->url = $url;
+        UrlHelper::setUrl($this->url);
         if ($this->id) {
             $this->model = $this->model::find($this->id);
             $this->data = $this->model->toArray();
@@ -28,18 +33,28 @@ abstract class BaseForm extends Component
 
     public function boot()
     {
-        $this->form = $this->form(new Form());
+        UrlHelper::setUrl($this->url);
     }
+    abstract public function form(Form $form);
+
 
     public function render()
     {
-
+        $this->form = $this->form(new Form());
         return view('future::base-form', ['inputs' => $this->form->render()]);
+    }
+
+
+    public function rules()
+    {
+        if(method_exists($this, 'form')){
+            return  $this->form(new Form())->getRules();
+        }
+        return [];
     }
 
     public function save()
     {
-        dd(url()->current());
         if (method_exists($this, 'rules')) {
             $this->validate();
         }
@@ -75,6 +90,4 @@ abstract class BaseForm extends Component
     {
         $this->dispatch('swalError', ['message' => $message]);
     }
-
-    abstract public function form(Form $form);
 }

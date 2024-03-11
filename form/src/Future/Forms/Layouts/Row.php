@@ -6,7 +6,7 @@ class Row{
     protected $attributes = [];
     protected $cols = [];
     protected $defaultColClasses = '';
-
+    protected $url;
     public static function make($sm=12, $md=12, $lg=12)
     {
         $instance = new static;

@@ -5,16 +5,21 @@ namespace Future\Form\Future;
 
 use Exception;
 use Future\Form\Future\Forms\Form;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
-abstract class ModalForm extends BaseForm
+abstract class ModalForm extends Component
 {
     protected $form;
     public $title;
     public $name;
+    #[Locked]
+    public $id;
+    public array $data = [];
+    protected $model;
 
-
-    public function mount(string $id = null,$title=null,$name=null)
+    public function mount(string $id = null,string $title=null,string $name=null)
     {
         $this->id = $id;
         $this->title = $title;
@@ -64,7 +69,24 @@ abstract class ModalForm extends BaseForm
         $this->dispatch('refreshTable');
     }
 
+    abstract public function form(Form $form);
 
+    protected function notificationOk($message)
+    {
+        $this->dispatch('swalSuccess', ['message' => $message]);
+    }
+
+    protected function notificationError($message)
+    {
+        $this->dispatch('swalError', ['message' => $message]);
+    }
+    public function rules()
+    {
+        if(method_exists($this, 'form')){
+            return  $this->form(new Form())->getRules();
+        }
+        return [];
+    }
     public function render()
     {
         $this->form = $this->form(new Form());

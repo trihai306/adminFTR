@@ -3,6 +3,7 @@
 namespace Future\Form\Future\Forms\Fields;
 
 use Future\Form\Future\Forms\Field;
+use Future\Form\Future\Forms\UrlHelper;
 
 class TextInput extends Field
 {
@@ -15,6 +16,10 @@ class TextInput extends Field
     public bool $disabled = false;
     protected $size = null;
     protected $step = null;
+    public function __construct(string $name)
+    {
+        parent::__construct($name, UrlHelper::getUrl());
+    }
 
     public function email()
     {
@@ -71,7 +76,6 @@ class TextInput extends Field
     }
     public function render()
     {
-
         $type = $this->isEmail ? 'email' : ($this->isPassword ? 'password' : 'text');
         $required = $this->isRequired;
         $name = $this->name;

@@ -3,7 +3,7 @@
     <!--begin::Content-->
     <div  class="content flex-row-fluid">
         <!--begin::Card-->
-        @livewire($form, ['id' => $id])
+        @livewire($form, ['id' => $id,'url'=>request()->route()->getName()])
         <!--end::Card-->
     </div>
     <!--end::Content-->

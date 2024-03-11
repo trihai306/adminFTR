@@ -9,7 +9,7 @@ class Card{
     protected $bodyClasses = '';
     protected $footer;
     protected $attributes = [];
-
+    protected $url;
     public static function make(string $title=null)
     {
         $instance = new static;
@@ -61,6 +61,11 @@ class Card{
         return $this;
     }
 
+    public function setUrl($url)
+    {
+       $this->url = $url;
+        return $this;
+    }
     public function render()
     {
         return view('future::layouts.card', [
@@ -71,6 +76,7 @@ class Card{
             'bodyClasses' => $this->bodyClasses,
             'footer' => $this->footer,
             'attributes' => $this->attributes,
+            'url' => $this->url,
         ])->render();
     }
 

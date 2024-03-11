@@ -15,13 +15,14 @@ class Field
     public bool $canHide = false;
     protected array $col = [];
     protected string $placeholder = '';
-
-    public function __construct(string $name)
+    protected ?string $url;
+    public function __construct(string $name, string $url = null)
     {
         $this->name = $name;
+        $this->url = $url;
     }
 
-    public static function make($name): self
+    public static function make(string $name): self
     {
         return new static($name);
     }
@@ -88,7 +89,7 @@ class Field
 
     public function canStore($hide)
     {
-        $currentRouteName = request()->route()->getName();
+        $currentRouteName = UrlHelper::getUrl();
         if (str_contains($currentRouteName, 'edit')) {
             $this->canHide = !$hide;
         }
@@ -97,10 +98,16 @@ class Field
 
     public function canCreate($hide)
     {
-        $currentRouteName = request()->route()->getName();
+        $currentRouteName = UrlHelper::getUrl();
         if (str_contains($currentRouteName, 'edit')) {
             $this->canHide = !$hide;
         }
+        return $this;
+    }
+
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
         return $this;
     }
 
