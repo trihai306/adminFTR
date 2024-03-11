@@ -5,12 +5,14 @@ namespace Future\Form\Future;
 
 use Exception;
 use Future\Form\Future\Forms\Form;
+use Future\Form\Future\Traits\NotificationTrait;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
-
+use Illuminate\Support\Facades\DB;
 abstract class ModalForm extends Component
 {
+    use NotificationTrait;
     protected $form;
     public $title;
     public $name;
@@ -47,28 +49,40 @@ abstract class ModalForm extends Component
         if (method_exists($this, 'rules')) {
             $this->validate();
         }
+
+        DB::beginTransaction(); // Bắt đầu transaction
+
         try {
             if (method_exists($this, 'beforeSave')) {
                 $this->data = $this->beforeSave($this->data);
             }
+
             if ($this->id) {
-                $model = $this->model::updateOrCreate(['id' => $this->id], $this->data);
-                $this->data = $model->toArray();
-                $this->id = null;
+                $model = $this->model::find($this->id);
+                if ($model) {
+                    $model->update($this->data);
+                    $this->data = $model->toArray();
+                } else {
+                    throw new Exception("Record not found.");
+                }
             } else {
                 $this->model::create($this->data);
-                $this->data = [];
             }
+
             if (method_exists($this, 'afterSave')) {
                 $this->afterSave($this->data);
             }
+
+            DB::commit(); // Hoàn thành transaction
+
             $this->notificationOk('Save success');
         } catch (Exception $e) {
+            DB::rollBack(); // Hoàn tác các thay đổi nếu có lỗi
             $this->notificationError($e);
         }
+
         $this->dispatch('refreshTable');
     }
-
     abstract public function form(Form $form);
 
     protected function notificationOk($message)

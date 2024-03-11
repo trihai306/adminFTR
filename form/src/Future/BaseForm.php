@@ -6,11 +6,14 @@ namespace Future\Form\Future;
 use Exception;
 use Future\Form\Future\Forms\Form;
 use Future\Form\Future\Forms\UrlHelper;
+use Future\Form\Future\Traits\NotificationTrait;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 abstract class BaseForm extends Component
 {
+    use NotificationTrait;
     #[Locked]
     public $id;
     public array $data = [];
@@ -55,39 +58,36 @@ abstract class BaseForm extends Component
 
     public function save()
     {
-        if (method_exists($this, 'rules')) {
-            $this->validate();
-        }
+        $this->validate();
+        DB::beginTransaction();
         try {
             if (method_exists($this, 'beforeSave')) {
                 $this->data = $this->beforeSave($this->data);
             }
+
             if ($this->id) {
-                $model = $this->model::updateOrCreate(['id' => $this->id], $this->data);
-                $this->data = $model->toArray();
+                $model = $this->model::find($this->id);
+                if ($model) {
+                    $model->update($this->data);
+                    $this->data = $model->toArray();
+                } else {
+                    throw new Exception("Record not found.");
+                }
             } else {
                 $this->model::create($this->data);
             }
-            if (!$this->id) {
-                $this->data = [];
-            }
+
             if (method_exists($this, 'afterSave')) {
                 $this->afterSave($this->data);
             }
+
+            DB::commit(); // Hoàn thành transaction
+
             $this->notificationOk('Save success');
         } catch (Exception $e) {
-            $this->notificationError($e->getMessage());
+            DB::rollBack(); // Hoàn tác các thay đổi nếu có lỗi
+            $this->notificationError($e);
         }
-        $this->dispatch('refreshTable');
-    }
 
-    protected function notificationOk($message)
-    {
-        $this->dispatch('swalSuccess', ['message' => $message]);
-    }
-
-    protected function notificationError($message)
-    {
-        $this->dispatch('swalError', ['message' => $message]);
     }
 }
