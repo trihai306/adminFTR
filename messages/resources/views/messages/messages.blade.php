@@ -365,16 +365,7 @@
 <script>
     $wire.on('messageSent', (e) => {
         e = e[0].message;
-        console.log(e);
-        let modalElement = document.getElementById('uploadModal');
-        let modalBackdrop = document.querySelector('.modal-backdrop');
-        let modalInstance = new bootstrap.Modal(modalElement);
-        if (modalElement.classList.contains('show')) {
-            modalInstance.hide();
-            modalElement.style.display = 'none';
-            modalBackdrop.style.display = 'none';
-        }
-        let chatItem = createChatItem(e.content, e.sender.name, e.sender.avatar, e.sender.id === {{Auth::user()->id}}, e.created_at, e.type,e.attachment_url);
+        let chatItem = createChatItem(e.content, e.sender.name, e.sender.avatar, e.sender.id == {{Auth::user()->id}}, e.created_at, e.type,e.attachment_url);
         document.getElementById('chat-bubbles').appendChild(chatItem);
     });
 
@@ -383,7 +374,7 @@
         var chatBubbleClass = isUser ? 'chat-bubble chat-bubble-me' : 'chat-bubble';
         var avatarStyle = senderAvatar ? `style="background-image: url(${senderAvatar})"` : '';
         var avatarContent = senderAvatar ? '' : senderName[0];
-        var avatarColumn = isUser ? '<div class="col-auto"><span class="avatar" ' + avatarStyle + '>' + avatarContent + '</span></div>' : '';
+        var avatarColumn = '<div class="col-auto"><span class="avatar" ' + avatarStyle + '>' + avatarContent + '</span></div>';
         var fileHTML = checkType(type, attachment_url) ?? '';
         var chatItem = `
         <div class="chat-item">
@@ -485,18 +476,13 @@
 
     window.Echo.private(`App.Models.User.{{Auth::user()->id}}`)
         .listen('UserMessageEvent', (e) => {
-            let modalElement = document.getElementById('uploadModal');
-            let modalInstance = new bootstrap.Modal(modalElement);
-            if (modalElement.classList.contains('show')) {
-                modalInstance.hide();
-            }
+            console.log(e)
             var sender = e.sender;
             var message = e.message;
             var messagesConversationId = message.conversation_id;
-            //lấy conversationId bằng params url
             var ConversationId = document.getElementById('conversation').getAttribute('conversation');
             if (messagesConversationId == ConversationId) {
-                let chatItem = createChatItem(message.content, sender.name, sender.avatar, sender.id === {{Auth::user()->id}}, message.created_at);
+                let chatItem = createChatItem(message.content, sender.name, sender.avatar, false, message.created_at);
                 document.getElementById('chat-bubbles').appendChild(chatItem);
             }
         });

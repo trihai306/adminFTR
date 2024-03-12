@@ -39,15 +39,17 @@ class CreateMessage extends Component
     public function sendMessage()
     {
         $this->validate();
+        $sender = Auth::user();
         $message = Message::create([
             'conversation_id' => $this->conversationId,
             'sender_id' => Auth::id(),
             'content' => $this->message,
             'type' => 'text',
         ]);
-        $message->load('sender');
-        $this->message = '';
+        $message['sender'] = $sender;
         $this->eventMessages($message);
+        $this->message = '';
+
     }
 
     public function sendFile()
@@ -98,7 +100,6 @@ class CreateMessage extends Component
     protected function eventMessages($message)
     {
         $messageData = [
-            'id' => $message->id,
             'conversation_id' => $message->conversation_id,
             'sender_id' => $message->sender_id,
             'content' => $message->content,
@@ -107,7 +108,7 @@ class CreateMessage extends Component
             'created_at' => $message->created_at->diffForHumans(),
             'sender' => $message->sender,
         ];
-        event(new UserMessageEvent( $this->userId, $messageData, Auth::id()));
+        event(new UserMessageEvent($this->userId, $messageData, $messageData['sender']));
         $this->dispatch('messageSent', ['message' => $messageData]);
     }
 

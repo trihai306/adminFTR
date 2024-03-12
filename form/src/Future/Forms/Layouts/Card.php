@@ -10,6 +10,7 @@ class Card{
     protected $footer;
     protected $attributes = [];
     protected $url;
+    public $canHide = false;
     public static function make(string $title=null)
     {
         $instance = new static;

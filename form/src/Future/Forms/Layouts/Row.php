@@ -31,8 +31,8 @@ class Row{
         if (!$col->canHide){
             if (!($col instanceof Col)) {
                 $col = Col::make()->schema([$col]);
+                $col->addClasses($this->defaultColClasses);
             }
-            $col->addClasses($this->defaultColClasses);
             $this->cols[] = $col;
         }
         return $this;

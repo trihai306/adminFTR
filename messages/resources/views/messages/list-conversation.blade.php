@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-5 col-xl-3 border-end">
     <div class="card-header d-none d-md-block" style="padding: 20px 16px">
         <div class="input-group">
-            <input type="text" wire:model.live.debounce.400ms="search" value="" class="form-control" placeholder="Search…"
+            <input type="text" wire:model.live.debounce.400ms="search" class="form-control" placeholder="Search…"
                    aria-label="Search">
             <a href="#" class="pt-2 ps-2" data-bs-toggle="modal" data-bs-target="#createConversation">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="24"
@@ -81,7 +81,7 @@
         </div>
     </div>
     <div class="card-body p-0 scrollable" style="max-height: 80vh">
-        <div class="nav flex-column nav-pills" wire:poll.30s role="tablist">
+        <div class="nav flex-column nav-pills" role="tablist">
             @foreach($conversations as $conversation)
                 <a href="#chat-{{$conversation->id}}" x-on:click="$wire.changeConversation({{$conversation->id}})"
                    class="nav-link text-start mw-100 p-3

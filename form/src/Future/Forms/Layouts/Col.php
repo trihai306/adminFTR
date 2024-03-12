@@ -5,7 +5,7 @@ class Col{
     protected $classes = '';
     protected $attributes = [];
     protected $content;
-
+    public $canHide = false;
     public static function make()
     {
         return new static;
