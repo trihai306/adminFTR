@@ -17,8 +17,9 @@
                         wire:keydown.enter="sendFile"
                     ></textarea>
                 </div>
-                <div class="modal-footer" >
-                    <button wire:click="sendFile" wire:target="files" wire:loading.remove  type="button" class="btn w-100 btn-primary">Send
+                <div class="modal-footer">
+                    <button wire:click="sendFile" wire:target="files" wire:loading.remove type="button"
+                            class="btn w-100 btn-primary">Send
                     </button>
                     <button wire:target="files" wire:loading type="button" class="btn w-100 btn-primary" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -38,7 +39,7 @@
                                                placeholder="Type message"
                                                style="resize: none; overflow: auto; height: 100%;"></textarea>
         <span class="input-group-text">
-                        <a href="#" class="link-secondary" id="icon" data-bs-toggle="tooltip" aria-label="icon"
+                        <a href="#" class="link-secondary" id="icon"  data-bs-toggle="tooltip" aria-label="icon"
                            data-bs-original-title="icon"> <!-- Download SVG icon from http://tabler-icons.io/i/mood-smile -->
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"

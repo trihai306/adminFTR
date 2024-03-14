@@ -8,9 +8,11 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Messages extends Component
 {
+    use WithPagination;
     #[Url]
     #[Locked]
     public $conversationId;

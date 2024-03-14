@@ -1,32 +1,36 @@
 <?php
+
 namespace Future\Messages\Future\Messages;
 
 use App\Events\UserMessageEvent;
+use Future\Messages\Http\Models\Conversation;
 use Future\Messages\Http\Models\Message;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 
 class CreateMessage extends Component
 {
-    public $message;
     use WithFileUploads;
+
+    public $message;
     public $files;
     #[Locked]
     public $conversationId;
+    public $users;
 
     protected $rules = [
         'message' => 'required',
+        'files.*' => 'max:524288,mimes:jpg,jpeg,png,gif,doc,docx,pdf,xls,xlsx,ppt,pptx,zip,rar,mp3,mp4,avi,mov,wmv,flv',
     ];
-    #[Locked]
-    public $userId;
 
-    public function mount($conversationId, $userId)
+    public function mount($conversationId)
     {
         $this->conversationId = $conversationId;
-        $this->userId = $userId;
+        $this->users = Conversation::find($this->conversationId)
+            ->users()->where('id', '!=', Auth::user()->id)->get();
     }
 
     #[On('changeConversation')]
@@ -39,76 +43,75 @@ class CreateMessage extends Component
     public function sendMessage()
     {
         $this->validate();
-        $sender = Auth::user();
-        $message = Message::create([
-            'conversation_id' => $this->conversationId,
-            'sender_id' => Auth::id(),
-            'content' => $this->message,
-            'type' => 'text',
-        ]);
-        $message['sender'] = $sender;
-        $this->eventMessages($message);
-        $this->message = '';
-
+        $messageData = $this->prepareMessageData('text');
+        $this->eventMessages($messageData);
+        $this->saveMessage($messageData);
+        $this->reset('message');
     }
 
     public function sendFile()
     {
+        $this->validate();
         try {
-            $this->validate([
-                'files.*' => 'max:524288,mimes:jpg,jpeg,png,gif,doc,docx,pdf,xls,xlsx,ppt,pptx,zip,rar,mp3,mp4,avi,mov,wmv,flv',
-            ]);
-            $filesArray = [];
-            $type = 'files';
-            foreach ($this->files as $file) {
-                if (in_array($file->getClientOriginalExtension(), ['mp4', 'avi', 'mov', 'wmv', 'flv'])) {
-                    $type = 'videos';
-                }
-                if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif','webp','svg'])) {
-                    $type = 'images';
-                }
-                $filename = $file->getClientOriginalName();
-                $linkFile = $file->store('public/messages/' . $this->conversationId);
-                $linkFile = str_replace('public/', '', $linkFile);
-                $filesArray[] = [
-                    'name' => $filename,
-                    'url' => $linkFile,
-                    'type' => $file->getClientOriginalExtension(),
-                    'sizeText' => round($file->getSize() / 1024, 2) . ' KB',
-                ];
-            }
-            $message = Message::create([
-                'conversation_id' => $this->conversationId,
-                'sender_id' => Auth::id(),
-                'content' => $this->message,
-                'attachment_url' => json_encode($filesArray),
-                'type' => $type,
-            ]);
-            $this->message = '';
-            $message->load('sender');
-            $this->eventMessages($message);
-        }
-        catch (\Exception $e) {
-            $this->dispatch('notification', [
-                'title' => 'Error',
-                'message' => 'có lỗi xảy ra',
-                'time' => now()->timestamp,
-            ]);
+            $filesArray = $this->processFiles();
+            $messageData = $this->prepareMessageData('files', $filesArray);
+            $this->eventMessages($messageData);
+            $this->saveMessage($messageData);
+            $this->reset('message', 'files');
+        } catch (\Exception $e) {
+            $this->addError('files', $e->getMessage());
         }
     }
 
-    protected function eventMessages($message)
+    protected function prepareMessageData($type, $filesArray = [])
     {
-        $messageData = [
-            'conversation_id' => $message->conversation_id,
-            'sender_id' => $message->sender_id,
-            'content' => $message->content,
-            'type' => $message->type,
-            'attachment_url' => json_decode($message->attachment_url),
-            'created_at' => $message->created_at->diffForHumans(),
-            'sender' => $message->sender,
+        $sender = Auth::user();
+        return [
+            'conversation_id' => $this->conversationId,
+            'sender_id' => $sender->id,
+            'content' => $this->message,
+            'type' => $type,
+            'created_at' => now()->diffForHumans(),
+            'attachment_url' => $type === 'files' ? json_encode($filesArray) : null,
+            'sender' => $sender,
         ];
-        event(new UserMessageEvent($this->userId, $messageData, $messageData['sender']));
+    }
+
+    protected function saveMessage($messageData)
+    {
+        $message = new Message($messageData);
+        $message->save();
+        return $message;
+    }
+
+    protected function processFiles()
+    {
+        $filesArray = [];
+        foreach ($this->files as $file) {
+            $filesArray[] = $this->storeFile($file);
+        }
+        return $filesArray;
+    }
+
+    protected function storeFile($file)
+    {
+        $filename = $file->getClientOriginalName();
+        $linkFile = $file->store('public/messages/' . $this->conversationId);
+        $linkFile = str_replace('public/', '', $linkFile);
+
+        return [
+            'name' => $filename,
+            'url' => $linkFile,
+            'type' => $file->getClientOriginalExtension(),
+            'sizeText' => round($file->getSize() / 1024, 2) . ' KB',
+        ];
+    }
+
+    protected function eventMessages($messageData)
+    {
+        foreach ($this->users as $user) {
+            event(new UserMessageEvent($user, $messageData, $messageData['sender']));
+        }
         $this->dispatch('messageSent', ['message' => $messageData]);
     }
 

@@ -1,6 +1,6 @@
-<div class="col-12 col-lg-7 col-xl-9 " id="chat">
+<div class="col-12 col-lg-7 col-xl-9 " x-data="chatComponent" x-init="init()" id="chat">
     @if($user)
-        <div class="card position-relative" wire:ignore.self id="conversation" conversation="{{$conversationId}}">
+        <div class="card position-relative" wire:ignore.self id="conversation">
             <div class="card-header">
                 <div>
                     <div class="row align-items-center">
@@ -33,14 +33,13 @@
                     @include('future::messages.components.profile',['user' => $user])
                 </div>
             </div>
-            <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column" wire:poll.keep-alive.60s>
                 @if($messages)
-                    <div class="card-body scrollable" style="height: 35rem ; display: flex;
-    flex-direction: column-reverse;
-    overflow-y: auto;">
+                    <div class="card-body d-flex flex-column" style="height: 34rem;
+                     flex-direction: column-reverse; overflow-y: auto;">
                         <div class="chat">
                             @if($messages->total() > 10 && $messages->currentPage() < $messages->lastPage())
-                                <div class="chat-bubbles mb-3" x-data="{}" x-intersect="$wire.loadMore()">
+                                <div class="chat-bubbles mb-3" x-intersect="$wire.loadMore()">
                                     <div class="chat-item mt-5">
                                         <div class="row align-items-end">
                                             <div class="col-auto">
@@ -347,11 +346,11 @@
                             </div>
                         </div>
                     </div>
-                    @livewire('future::messages.create-message', ['conversationId' => $conversationId, 'userId' => $user->id])
+                    @livewire('future::messages.create-message', ['conversationId' => $conversationId])
                 @else
                     <div class="card-body scrollable" style="height: 35rem ; display: flex;
-    flex-direction: column-reverse;
-    overflow-y: auto;">
+                            flex-direction: column-reverse;
+                            overflow-y: auto;">
                         <div class="chart">
                         </div>
                     </div>
@@ -363,9 +362,16 @@
 </div>
 @script
 <script>
+    Alpine.data('chatComponent', () => ({
+        messages: [],
+        init() {
+
+        },
+
+    }));
     $wire.on('messageSent', (e) => {
         e = e[0].message;
-        let chatItem = createChatItem(e.content, e.sender.name, e.sender.avatar, e.sender.id == {{Auth::user()->id}}, e.created_at, e.type,e.attachment_url);
+        let chatItem = createChatItem(e.content, e.sender.name, e.sender.avatar, e.sender.id == {{Auth::user()->id}}, e.created_at, e.type, e.attachment_url);
         document.getElementById('chat-bubbles').appendChild(chatItem);
     });
 
@@ -476,12 +482,13 @@
 
     window.Echo.private(`App.Models.User.{{Auth::user()->id}}`)
         .listen('UserMessageEvent', (e) => {
-            console.log(e)
             var sender = e.sender;
             var message = e.message;
             var messagesConversationId = message.conversation_id;
-            var ConversationId = document.getElementById('conversation').getAttribute('conversation');
-            if (messagesConversationId == ConversationId) {
+            let params = new URLSearchParams(window.location.search);
+            let conversationId = params.get('conversationId');
+            $wire.dispatch('messageSent');
+            if (messagesConversationId == conversationId) {
                 let chatItem = createChatItem(message.content, sender.name, sender.avatar, false, message.created_at);
                 document.getElementById('chat-bubbles').appendChild(chatItem);
             }

@@ -51,7 +51,7 @@
 <!-- Libs JS -->
 <!-- Tabler Core -->
 <script data-navigate-once src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@vite(['resources/js/app.js','resources/css/app.css'])
+@vite(['resources/js/app.js'])
 <script data-navigate-once src="{{ asset('dist/js/tabler.min.js') }}"></script>
 <script data-navigate-once src="{{ asset('dist/js/demo.min.js') }}"></script>
 <script data-navigate-once src="{{ asset('dist/js/custom.js') }}"></script>

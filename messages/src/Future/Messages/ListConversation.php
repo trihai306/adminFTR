@@ -37,16 +37,20 @@ class ListConversation extends Component
             ->joinSub($lastMessageSub, 'last_messages', function ($join) {
                 $join->on('conversations.id', '=', 'last_messages.conversation_id');
             })
-            ->with(['users' => function ($query) use ($user) {
-                $query->where('id', '!=', $user->id);
-            }, 'lastMessage'])
+            ->with([
+                'users' => function ($query) use ($user) {
+                    $query->where('id', '!=', $user->id);
+                },
+                'lastMessage',
+                'lastSeenMessage' => function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                }
+            ])
             ->whereHas('users', function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
-            // Sắp xếp dựa trên 'last_message_at' từ subquery
             ->orderBy('last_messages.last_message_at', 'desc')
             ->fastPaginate($this->page);
-
         return $conversations;
     }
 

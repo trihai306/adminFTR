@@ -14,7 +14,7 @@
                                 data-bs-toggle="dropdown" data-bs-auto-close="outside">
                             <i class="fa fa-filter"></i>
                         </button>
-                        <div class="dropdown-menu p-0" wire:ignore>
+                        <div class="dropdown-menu dropdown-menu-arrow p-0" wire:ignore>
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title fw-bold">Filter</h3>
@@ -51,7 +51,7 @@
                                 @click="isToggled = !isToggled">
                             <i x-bind:class="isToggled ? 'fa fa-toggle-on' : 'fa fa-toggle-off'"></i>
                         </button>
-                        <div class="dropdown-menu" wire:ignore>
+                        <div class="dropdown-menu dropdown-menu-arrow" wire:ignore>
                             @foreach($this->defineColumns() as $column)
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="checkbox"

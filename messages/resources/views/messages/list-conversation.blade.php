@@ -38,7 +38,8 @@
                                             autocomplete="off"
                                         >
                                         <span class="input-icon-addon" >
-                                          <div class="spinner-border spinner-border-sm text-secondary" wire:loading wire:target="searchUser" role="status"></div>
+                                          <div class="spinner-border spinner-border-sm text-secondary"
+                                               wire:loading wire:target="searchUser" role="status"></div>
                                         </span>
                                     </div>
                                     <ul x-show="open" class="list-group overflow-auto" wire:target="searchUser"
@@ -47,7 +48,8 @@
                                             @if(str_contains(strtolower($user->name), strtolower($search)))
                                                 <li
                                                     class="list-group-item list-group-item-action"
-                                                    x-on:click="search = '{{ str_replace("'", "\\'", $user->name) }}'; open = false; $wire.set('user', '{{ $user->id }}')"
+                                                    x-on:click="search = '{{ str_replace("'", "\\'", $user->name) }}';
+                                                    open = false; $wire.set('user', '{{ $user->id }}')"
                                                 >
                                                     {{ $user->name }}
                                                 </li>
@@ -72,7 +74,8 @@
                                         @endif
                                     </ul>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100"  data-bs-dismiss="modal" aria-label="Close">Create</button>
+                                <button type="submit" class="btn btn-primary w-100"  data-bs-dismiss="modal"
+                                        aria-label="Close">Create</button>
                             </form>
                         </div>
                     </div>
@@ -81,7 +84,7 @@
         </div>
     </div>
     <div class="card-body p-0 scrollable" style="max-height: 80vh">
-        <div class="nav flex-column nav-pills" role="tablist">
+        <div class="nav flex-column nav-pills" role="tablist" wire:poll.keep-alive.60s>
             @foreach($conversations as $conversation)
                 <a href="#chat-{{$conversation->id}}" x-on:click="$wire.changeConversation({{$conversation->id}})"
                    class="nav-link text-start mw-100 p-3
