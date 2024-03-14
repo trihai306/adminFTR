@@ -1,4 +1,5 @@
-<div class="col-12 col-lg-7 col-xl-9 " x-data="chatComponent" x-init="init()" id="chat">
+<div class="col-12 col-lg-7 col-xl-9 " x-data="chatComponent" x-init="init()" id="chat"
+     x-on:message-sent="handleMessageSent($event.detail)" x-on:change-conversation.window="scrollToBottom()">
     @if($user)
         <div class="card position-relative" wire:ignore.self id="conversation">
             <div class="card-header">
@@ -26,7 +27,8 @@
                              stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path
-                                d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"></path>
+                                d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0
+                                 1 -15 -15a2 2 0 0 1 2 -2"></path>
                         </svg>
                         Phone
                     </a>
@@ -35,11 +37,11 @@
             </div>
             <div class="card-body d-flex flex-column" wire:poll.keep-alive.60s>
                 @if($messages)
-                    <div class="card-body d-flex flex-column" style="height: 34rem;
+                    <div class="card-body d-flex flex-column"  id="body-scroll" style="height: 34rem;
                      flex-direction: column-reverse; overflow-y: auto;">
                         <div class="chat">
                             @if($messages->total() > 10 && $messages->currentPage() < $messages->lastPage())
-                                <div class="chat-bubbles mb-3" x-intersect="$wire.loadMore()">
+                                <div class="chat-bubbles mb-3" x-intersect="loadMore()">
                                     <div class="chat-item mt-5">
                                         <div class="row align-items-end">
                                             <div class="col-auto">
@@ -363,135 +365,135 @@
 @script
 <script>
     Alpine.data('chatComponent', () => ({
-        messages: [],
         init() {
-
+            this.scrollToBottom();
+            this.listenForMessages();
         },
-
-    }));
-    $wire.on('messageSent', (e) => {
-        e = e[0].message;
-        let chatItem = createChatItem(e.content, e.sender.name, e.sender.avatar, e.sender.id == {{Auth::user()->id}}, e.created_at, e.type, e.attachment_url);
-        document.getElementById('chat-bubbles').appendChild(chatItem);
-    });
-
-    function createChatItem(message, senderName, senderAvatar, isUser, time, type, attachment_url) {
-        var rowClass = isUser ? 'row align-items-end justify-content-end' : 'row align-items-end';
-        var chatBubbleClass = isUser ? 'chat-bubble chat-bubble-me' : 'chat-bubble';
-        var avatarStyle = senderAvatar ? `style="background-image: url(${senderAvatar})"` : '';
-        var avatarContent = senderAvatar ? '' : senderName[0];
-        var avatarColumn = '<div class="col-auto"><span class="avatar" ' + avatarStyle + '>' + avatarContent + '</span></div>';
-        var fileHTML = checkType(type, attachment_url) ?? '';
-        var chatItem = `
-        <div class="chat-item">
-            <div class="${rowClass}">
-                 ${isUser ? '' : avatarColumn}
-                <div class="col col-lg-6">
-                    <div class="${chatBubbleClass}">
-                        <div class="chat-bubble-title">
-                            <div class="row">
-                                <div class="col chat-bubble-author">${senderName}</div>
-                                <div class="col-auto chat-bubble-date">${time}</div>
-                            </div>
-                        </div>
-                        <div class="chat-bubble-body">
-                            <p>${message ?? ''}</p>
-                            ${fileHTML}
+        createChatItem(message, senderName, senderAvatar, isUser, time, type, attachmentUrl) {
+            const chatItem = document.createElement('div');
+            chatItem.className = 'chat-item';
+            chatItem.innerHTML = `
+        <div class="row align-items-end ${isUser ? 'justify-content-end' : ''}">
+            ${isUser ? '' : createAvatarColumn(senderAvatar, senderName)}
+            <div class="col col-lg-6">
+                <div class="chat-bubble ${isUser ? 'chat-bubble-me' : ''}">
+                    <div class="chat-bubble-title">
+                        <div class="row">
+                            <div class="col chat-bubble-author">${senderName}</div>
+                            <div class="col-auto chat-bubble-date">${time}</div>
                         </div>
                     </div>
+                    <div class="chat-bubble-body">
+                        <p>${message ?? ''}</p>
+                        ${this.checkType(type, attachmentUrl)}
+                    </div>
                 </div>
-                 ${isUser ? avatarColumn : ''}
-
             </div>
+            ${isUser ? this.createAvatarColumn(senderAvatar, senderName) : ''}
         </div>
     `;
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(chatItem, 'text/html');
-        chatItem = doc.body.firstChild;
-        return chatItem;
-    }
+            return chatItem;
+        },
+        createAvatarColumn(avatar, name) {
+            return `
+        <div class="col-auto">
+            <span class="avatar" style="${avatar ? `background-image: url(${avatar})` : ''}">
+                ${avatar ? '' : name[0]}
+            </span>
+        </div>
+    `;
+        },
+        handleMessageSent(e) {
+            e = e[0]
+            let chatItem = this.createChatItem(e.message.content, e.message.sender.name, e.message.sender.avatar,
+                e.message.sender.id == {{ Auth::user()->id }}, e.message.created_at, e.message.type,
+                e.message.attachment_url);
+            document.getElementById('chat-bubbles').appendChild(chatItem);
+            this.scrollToBottom();
 
-    function checkType(type, attachment_url) {
-        let attachments = attachment_url;
-        // Check the type of the message
-        switch (type) {
-            case 'files':
-                // Render file message
-                let fileHTML = attachments.map(file => {
-                    return `
+        },
+        checkType(type, attachments) {
+            if (!attachments) return '';
+
+            const createAttachmentHtml = (attachments, wrapperClass, renderFunction) => {
+                const attachmentHtml = attachments.map(renderFunction).join('');
+                return `<div class="${wrapperClass}">${attachmentHtml}</div>`;
+            };
+
+            switch (type) {
+                case 'files':
+                    return createAttachmentHtml(attachments, 'list-group list-group-flush mt-3 list-group-hoverable',
+                        file => `
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <a href="#"><span class="avatar">${file.type}</span></a>
+                                <span class="avatar">${file.type[0]}</span>
                             </div>
                             <div class="col text-truncate">
                                 <a href="#" class="text-reset d-block">${file.name}</a>
                             </div>
                             <div class="col-auto">
                                 <a href="${file.url}" class="list-group-item-actions">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-bar-to-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M4 20l16 0"/>
-                                        <path d="M12 14l0 -10"/>
-                                        <path d="M12 14l4 -4"/>
-                                        <path d="M12 14l-4 -4"/>
-                                    </svg>
+                                    <!-- Icon for download -->
                                 </a>
                             </div>
                         </div>
                     </div>
-                `;
-                }).join('');
-                return `<div class="list-group list-group-flush mt-3 list-group-hoverable">${fileHTML}</div>`;
-            case 'images':
-                // Render image message
-                let imageHTML = attachments.map(image => {
-                    return `
+                `);
+                case 'images':
+                    return createAttachmentHtml(attachments, 'mt-3 row',
+                        image => `<div class="col-auto"><img src="${image.url}" class="img-fluid rounded" alt="${image.name}"></div>`);
+                case 'videos':
+                    return createAttachmentHtml(attachments, 'mt-3 row',
+                        video => `
                     <div class="col-auto">
-                        <img src="${image.url}" class="img-fluid rounded" alt="...">
+                        <video controls src="${video.url}" class="img-fluid rounded"></video>
                     </div>
-                `;
-                }).join('');
-                return `<div class="mt-3 row">${imageHTML}</div>`;
-            case 'videos':
-                // Render video message
-                let videoHTML = attachments.map(video => {
-                    return `
+                `);
+                case 'audios':
+                    return createAttachmentHtml(attachments, 'mt-3 row',
+                        audio => `
                     <div class="col-auto">
-                   <video src="${video.url}" class="img-fluid rounded" alt="..."></video>
+                        <audio controls src="${audio.url}" class="img-fluid rounded"></audio>
                     </div>
-                `;
-                }).join('');
-                return `<div class="mt-3 row">${videoHTML}</div>`;
-            case 'audios':
-                // Render audio message
-                let audioHTML = attachments.map(audio => {
-                    return `
-                    <div class="col-auto">
-                      <audio src="${audio.url}" class="img-fluid rounded" alt="..."></audio>
-                    </div>
-                `;
-                }).join('');
-                return `<div class="mt-3 row">${audioHTML}</div>`;
-            default:
-                return;
-        }
-    }
-
-
-    window.Echo.private(`App.Models.User.{{Auth::user()->id}}`)
-        .listen('UserMessageEvent', (e) => {
-            var sender = e.sender;
-            var message = e.message;
-            var messagesConversationId = message.conversation_id;
-            let params = new URLSearchParams(window.location.search);
-            let conversationId = params.get('conversationId');
-            $wire.dispatch('messageSent');
-            if (messagesConversationId == conversationId) {
-                let chatItem = createChatItem(message.content, sender.name, sender.avatar, false, message.created_at);
-                document.getElementById('chat-bubbles').appendChild(chatItem);
+                `);
+                default:
+                    return '';
             }
-        });
+        },
+        scrollToBottom() {
+            document.getElementById('body-scroll').scrollTo(0, document.getElementById('body-scroll').scrollHeight);
+        },
+        listenForMessages(){
+            window.Echo.private(`App.Models.User.{{Auth::user()->id}}`)
+                .listen('UserMessageEvent', (e) => {
+                    var sender = e.sender;
+                    var message = e.message;
+                    var messagesConversationId = message.conversation_id;
+                    let params = new URLSearchParams(window.location.search);
+                    let conversationId = params.get('conversationId');
+                    $wire.dispatch('message-sent');
+                    if (messagesConversationId == conversationId) {
+                        let chatItem = this.createChatItem(message.content, sender.name, sender.avatar,
+                            false, message.created_at);
+                        document.getElementById('chat-bubbles').appendChild(chatItem);
+                    }
+                });
+        },
+        loadMore() {
+            $wire.loadMore().then(() => {
+                this.$nextTick(() => {
+                    const chatContainer = document.getElementById('body-scroll');
+                    if (chatContainer) {
+                        chatContainer.scrollTo(0, 200);
+                    }
+                });
+            });
+        }
+
+    }));
+
+
+
 </script>
 @endscript

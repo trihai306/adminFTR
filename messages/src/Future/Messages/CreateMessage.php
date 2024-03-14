@@ -112,7 +112,7 @@ class CreateMessage extends Component
         foreach ($this->users as $user) {
             event(new UserMessageEvent($user, $messageData, $messageData['sender']));
         }
-        $this->dispatch('messageSent', ['message' => $messageData]);
+        $this->dispatch('message-sent', ['message' => $messageData]);
     }
 
     public function render()

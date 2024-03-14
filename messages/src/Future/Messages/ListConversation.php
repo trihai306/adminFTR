@@ -100,7 +100,7 @@ class ListConversation extends Component
         }
     }
 
-    #[On('messageSent')]
+    #[On('message-sent')]
     public function render()
     {
         if ($this->searchUser) {

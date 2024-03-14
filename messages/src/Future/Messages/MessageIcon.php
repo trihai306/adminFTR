@@ -25,7 +25,7 @@ class MessageIcon extends Component
             "echo-private:messages.{$this->userId},MessageSent" => 'refreshCount',
         ];
     }
-    #[On('messageSent')]
+    #[On('message-sent')]
     public function render()
     {
         $conversations = $this->getConversations();

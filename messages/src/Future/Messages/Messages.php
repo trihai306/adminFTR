@@ -48,6 +48,7 @@ class Messages extends Component
     public function loadMore()
     {
         $this->page += 10;
+        return true;
     }
 
     public function render()
