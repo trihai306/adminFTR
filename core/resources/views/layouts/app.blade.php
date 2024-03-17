@@ -19,6 +19,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="{{ asset('dist/css/demo.min.css') }}?v={{ time() }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/app.css') }}?v={{ time() }}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery.min.css" rel="stylesheet">
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -52,6 +53,7 @@
 <!-- Tabler Core -->
 <script data-navigate-once src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @vite(['resources/js/app.js'])
+<script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.min.js"></script>
 <script data-navigate-once src="{{ asset('dist/js/tabler.min.js') }}"></script>
 <script data-navigate-once src="{{ asset('dist/js/demo.min.js') }}"></script>
 <script data-navigate-once src="{{ asset('dist/js/custom.js') }}"></script>

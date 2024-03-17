@@ -88,7 +88,9 @@ class CreateMessage extends Component
     {
         $filesArray = [];
         foreach ($this->files as $file) {
-            $filesArray[] = $this->storeFile($file);
+            $fileDetails = $this->storeFile($file);
+            $fileDetails['type'] = $this->determineFileType($file);
+            $filesArray[] = $fileDetails;
         }
         return $filesArray;
     }
@@ -105,6 +107,25 @@ class CreateMessage extends Component
             'type' => $file->getClientOriginalExtension(),
             'sizeText' => round($file->getSize() / 1024, 2) . ' KB',
         ];
+    }
+
+    protected function determineFileType($file)
+    {
+        $extension = $file->getClientOriginalExtension();
+
+        $imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'flv'];
+        $audioExtensions = ['mp3'];
+
+        if (in_array($extension, $imageExtensions)) {
+            return 'image';
+        } elseif (in_array($extension, $videoExtensions)) {
+            return 'video';
+        } elseif (in_array($extension, $audioExtensions)) {
+            return 'audio';
+        } else {
+            return 'file';
+        }
     }
 
     protected function eventMessages($messageData)

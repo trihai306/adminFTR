@@ -15,6 +15,7 @@ trait SearchTrait {
      *
      * @var string
      */
+    #[Session]
     #[Url(as: 's')]
     public $search = '';
     /**
