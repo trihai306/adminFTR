@@ -9,7 +9,7 @@
 
         <div class="offcanvas-body p-0">
         <div id="rv_activities_scroll" class="position-relative ">
-            <div class="list-group" style="max-height: 76vh; overflow-y:auto">
+            <div class="list-group" style="max-height: 76vh;">
                     @foreach($notifications as $notification)
                     <div class="list-group-item" wire:click="markAsRead('{{$notification->id}}')"
                          wire:key="{{$notification->id}}" style="cursor: pointer;">

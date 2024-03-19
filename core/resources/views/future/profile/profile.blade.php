@@ -1,10 +1,12 @@
 <div class="col-12 col-md-9 d-flex flex-column" x-data="{ isEdit: false }">
-    <form>
+    <form wire:submit="">
         <div class="card-body">
             <h2 class="mb-4">{{ __('future::profile.my_account') }}</h2>
             <h3 class="card-title">{{ __('future::profile.profile_details') }}</h3>
             <div class="row align-items-center">
-                <div class="col-auto"><span class="avatar avatar-xl" style="background-image: url({{ auth()->user()->avatar ? Storage::url(auth()->user()->avatar) : asset('static/avatars/001f.jpg') }})"></span></div>
+                <div class="col-auto">
+                    <span class="avatar avatar-xl" style="background-image: url({{ auth()->user()->avatar ? Storage::url(auth()->user()->avatar) : asset('static/avatars/001f.jpg') }})"></span>
+                </div>
                 <div class="col-auto">
                     <label class="btn" for="avatarUpload">
                         {{ __('future::profile.change_avatar') }}
@@ -16,17 +18,17 @@
             <div class="row g-3">
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.name') }}</div>
-                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->name ?? 'chưa có tên' }}" readonly>
+                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->name ?? 'chưa có tên' }}">
                     <p x-show="!isEdit">{{ Auth::user()->name ?? 'chưa có tên' }}</p>
                 </div>
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.phone') }}</div>
-                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}" readonly>
+                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}">
                     <p x-show="!isEdit">{{ Auth::user()->phone ?? 'chưa có số điện thoại' }}</p>
                 </div>
                 <div class="col-md">
                     <div class="form-label">{{ __('future::profile.birthday') }}</div>
-                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}" readonly>
+                    <input type="text" class="form-control" x-show="isEdit" value="{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}">
                     <p x-show="!isEdit">{{ Auth::user()->birthday ?? 'chưa cập nhập ngày' }}</p>
                 </div>
             </div>

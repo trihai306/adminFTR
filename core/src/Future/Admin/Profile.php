@@ -45,6 +45,11 @@ class Profile extends Component
         }
     }
 
+    public function updateProfile()
+    {
+
+    }
+
     public function render()
     {
         return view('future::future.profile.profile');

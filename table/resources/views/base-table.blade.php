@@ -1,5 +1,5 @@
 <div x-data="tableData" @data="updateData()" @reset-select.window="selectAll = false; selectedRows = [];">
-    <div class="container-xl mb-5">
+    <div class="container-fluid mb-5">
         <div class="row g-2 align-items-center">
             <div class="col">
             </div>
@@ -87,7 +87,6 @@
             @livewire($form['form'],['id' => null,'title' => $form['label'],'name' => $form['name']])
         @endforeach
     @endif
-    @include('future::table.filter')
 </div>
 
 @script

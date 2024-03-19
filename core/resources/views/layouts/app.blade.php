@@ -7,7 +7,7 @@
     <meta name="csrf-token" value="{{ csrf_token() }}">
     <title>FUTURE</title>
     <!-- CSS files -->
-    <link href="{{ asset('dist/css/tabler.min.css') }}?v={{ time() }}" rel="stylesheet"/>
+    <link href="{{ asset('dist/css/tabler.css') }}?v={{ time() }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/tabler-flags.min.css') }}?v={{ time() }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/tabler-payments.min.css') }}?v={{ time() }}" rel="stylesheet"/>
     <link href="{{ asset('dist/css/tabler-vendors.min.css') }}?v={{ time() }}" rel="stylesheet"/>
@@ -40,7 +40,7 @@
     @include('future::app.header')
     <div class="page-wrapper">
         <div class="page-body">
-            <div class="container-xl">
+            <div class="container-fluid">
                 @yield('content')
             </div>
         </div>
